@@ -1,0 +1,105 @@
+# OpenArm双臂机器人外骨骼重定向配置文件
+# 配置文件版本: 1.0
+# 依据 openarm_description/urdf 关节命名
+
+robot_info:
+  name: "OpenArm"
+  description: "OpenArm bimanual robot"
+  manufacturer: "Enactic"
+  version: "v10"
+
+topics:
+  exo_joint_topic: '/exo/joint_command'
+  target_left_arm_topic: '/left_arm/joint_command'
+  target_right_arm_topic: '/right_arm/joint_command'
+  status_topic: '/exo_retargeting/status'
+
+# 外骨骼输入关节（16个）映射到左右臂7关节索引
+exo_joint_mapping:
+  left_arm:
+    joint_names:
+      - 'left_arm_joint_1'
+      - 'left_arm_joint_2'
+      - 'left_arm_joint_3'
+      - 'left_arm_joint_4'
+      - 'left_arm_joint_5'
+      - 'left_arm_joint_6'
+      - 'left_arm_joint_7'
+    indices: [0, 1, 2, 3, 4, 5, 6]
+
+  right_arm:
+    joint_names:
+      - 'right_arm_joint_1'
+      - 'right_arm_joint_2'
+      - 'right_arm_joint_3'
+      - 'right_arm_joint_4'
+      - 'right_arm_joint_5'
+      - 'right_arm_joint_6'
+      - 'right_arm_joint_7'
+    indices: [7, 8, 9, 10, 11, 12, 13]
+
+  triggers:
+    joint_names: ['left_trigger_joint', 'right_trigger_joint']
+    indices: [14, 15]
+
+# 目标机器人（OpenArm）关节名称（URDF）
+# OpenArm使用7自由度手臂：joint1-joint7
+# 基于 openarm_description/urdf/arm/openarm_arm.xacro
+target_joint_mapping:
+  left_arm:
+    joint_names:
+      - 'openarm_left_joint1'
+      - 'openarm_left_joint2'
+      - 'openarm_left_joint3'
+      - 'openarm_left_joint4'
+      - 'openarm_left_joint5'
+      - 'openarm_left_joint6'
+      - 'openarm_left_joint7'
+
+  right_arm:
+    joint_names:
+      - 'openarm_right_joint1'
+      - 'openarm_right_joint2'
+      - 'openarm_right_joint3'
+      - 'openarm_right_joint4'
+      - 'openarm_right_joint5'
+      - 'openarm_right_joint6'
+      - 'openarm_right_joint7'
+
+# Retargeting变换参数（初始参数，可根据实际调整）
+retargeting_params:
+  scaling_factors:
+    # OpenArm的7个关节缩放因子
+    left_arm:  [1.0, 1.0, -1.0, 1.0, 1.0, -1.0, -1.0]
+    right_arm: [1.0, 1.0, -1.0, 1.0, 1.0, 1.0, -1.0]
+
+  offset_angles:
+    # OpenArm关节偏置（单位: 弧度）
+    # 基于OpenArm URDF的关节轴方向与外骨骼的差异
+    left_arm:  [-1.5707, -1.5707, 0.0, 1.5707, 1.5707, 0.0, 0.0]
+    right_arm: [1.5707, 1.5707, 0.0, 1.5707, -1.5707, 0.0, 0.0]
+
+  # 关节限位（从OpenArm v10的joint_limits.yaml配置文件获取）
+  # 基于 openarm_description/config/arm/v10/joint_limits.yaml
+  # 注意：joint1和joint2在双臂配置中有offset，这里已考虑
+  joint_limits:
+    left_arm:
+      # joint1有offset=-2.094396 (-120度)
+      # joint2有offset=-pi/2 (-90度)，且有reflect=-1
+      lower: [-3.490919, -3.316125, -1.570796,  0.0,      -1.570796, -0.785398, -1.570796]
+      upper: [ 1.302003,  0.174533,  1.570796,  2.443461,  1.570796,  0.785398,  1.570796]
+    right_arm:
+      # joint1无offset
+      # joint2有offset=pi/2 (90度)
+      lower: [-1.396263, -0.174533, -1.570796,  0.0,      -1.570796, -0.785398, -1.570796]
+      upper: [ 3.490659,  3.316125,  1.570796,  2.443461,  1.570796,  0.785398,  1.570796]
+
+  smoothing:
+    enable: true
+    alpha: 0.8
+
+  kinematics:
+    enable_constraints: true
+    max_velocity: 2.0
+    max_acceleration: 5.0
+

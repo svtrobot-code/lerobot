@@ -1,0 +1,54 @@
+robot:
+  type: openarm_rosbridge_bimanual
+  id: openarm_single_rgb
+  rosbridge_host: 127.0.0.1
+  rosbridge_port: 9090
+  rosbridge_transport: asyncio
+  active_control: false
+  joint_states_topic: /joint_states
+  joint_state_timeout_s: 2.0
+  wait_for_joint_states_s: 10.0
+  cameras:
+    front:
+      type: opencv
+      index_or_path: /dev/video0
+      width: 640
+      height: 480
+      fps: 30
+      fourcc: MJPG
+
+teleop:
+  type: openarm_rosbridge_bimanual_teleop
+  id: openarm_exoskeleton
+  rosbridge_host: 127.0.0.1
+  rosbridge_port: 9090
+  rosbridge_transport: asyncio
+  left_arm_command_topic: /left_forward_position_controller/commands
+  right_arm_command_topic: /right_forward_position_controller/commands
+  left_joint_command_topic: /left_arm/joint_command
+  right_joint_command_topic: /right_arm/joint_command
+  command_timeout_s: 2.0
+  wait_for_commands_s: 10.0
+  gripper_output_mode: bridge_binary_meters
+  gripper_open_m: 0.044
+  left_gripper_closed_m: -0.040
+  right_gripper_closed_m: -0.030
+
+dataset:
+  repo_id: local/openarm_single_rgb_test
+  root: data/openarm_single_rgb_test
+  single_task: Test OpenArm bimanual data collection with one RGB camera
+  fps: 15
+  num_episodes: 100
+  episode_time_s: 120
+  reset_time_s: 30
+  video: true
+  push_to_hub: false
+  no_stamp: true
+  rgb_encoder:
+    vcodec: h264
+
+display_data: true
+display_mode: rerun
+wait_for_enter: true
+play_sounds: false

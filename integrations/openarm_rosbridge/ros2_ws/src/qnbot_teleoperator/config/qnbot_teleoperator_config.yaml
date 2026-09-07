@@ -1,0 +1,18 @@
+websocket_teleoperator:
+  ros__parameters:
+    # WebSocket 服务器配置
+    websocket_host: "0.0.0.0"      # 监听地址，0.0.0.0 表示监听所有接口
+    websocket_port: 19091          # WebSocket 端口，与发送端匹配
+    
+    # ROS2 话题配置 - 发布外骨骼专用话题
+    joint_command_topic: "/exo/joint_command"    # 外骨骼关节命令话题（14个关节）
+    gamepad_keys_topic: "/exo/gamepad_keys"      # 外骨骼摇杆数据话题
+    
+    # 发布频率配置
+    publish_rate_hz: 200.0         # 关节命令发布频率 (Hz)
+    
+    # 超时配置
+    timeout_ms: 100                # 数据超时时间 (毫秒)，超时后使用默认位置
+    
+    # 日志级别
+    log_level: "INFO"              # DEBUG, INFO, WARN, ERROR 

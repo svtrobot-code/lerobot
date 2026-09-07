@@ -1,0 +1,60 @@
+# Autonomous PI0.5 rollout through the existing ROS2 exoskeleton bridge.
+# Keep interactive=true: the robot remains idle until /start is entered.
+robot:
+  type: openarm_rosbridge_bimanual
+  id: openarm_pi05
+  rosbridge_host: 127.0.0.1
+  rosbridge_port: 9090
+  rosbridge_transport: asyncio
+  active_control: true
+  command_transport: exoskeleton_bridge
+  joint_states_topic: /joint_states
+  joint_state_timeout_s: 2.0
+  wait_for_joint_states_s: 10.0
+  left_bridge_command_topic: /left_arm/joint_command
+  right_bridge_command_topic: /right_arm/joint_command
+  gripper_open_m: 0.044
+  left_gripper_closed_m: -0.040
+  right_gripper_closed_m: -0.030
+  # Limit every 15 Hz arm target to about 2.9 degrees from the last sent target.
+  max_delta_rad: 0.05
+  cameras:
+    front:
+      type: opencv
+      index_or_path: /dev/video0
+      width: 640
+      height: 480
+      fps: 30
+      fourcc: MJPG
+
+policy:
+  path: outputs/train/openarm_pi05_lora/checkpoints/last/pretrained_model
+  device: cuda
+  dtype: bfloat16
+  n_action_steps: 10
+  num_inference_steps: 10
+  tokenizer_max_length: 64
+
+strategy:
+  type: base
+
+inference:
+  type: rtc
+  queue_threshold: 20
+  rtc:
+    enabled: true
+    mode: guided
+    prefix_attention_schedule: linear
+    max_guidance_weight: 10.0
+    execution_horizon: 10
+    debug: false
+
+fps: 15
+duration: 120
+interactive: true
+task: Pick up the object with both arms and place it in the target area
+display_data: true
+display_mode: rerun
+play_sounds: false
+return_to_initial_position: false
+use_torch_compile: false

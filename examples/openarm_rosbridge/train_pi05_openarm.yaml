@@ -1,0 +1,58 @@
+# Memory-conscious PI0.5 LoRA fine-tuning for one RTX 5060 (8 GB VRAM).
+# The dataset must keep the same camera/state/action schema used during recording.
+dataset:
+  repo_id: local/openarm_single_rgb_100ep
+  root: data/openarm_single_rgb_100ep
+  video_backend: pyav
+  return_uint8: true
+  eval_split: 0.05
+
+policy:
+  path: lerobot/pi05_base
+  device: cuda
+  dtype: bfloat16
+  use_amp: true
+  push_to_hub: false
+  gradient_checkpointing: true
+  compile_model: false
+  chunk_size: 30
+  n_action_steps: 10
+  num_inference_steps: 10
+  tokenizer_max_length: 64
+  use_relative_actions: false
+  use_visual_memory: false
+  use_proprioceptive_memory: false
+
+output_dir: outputs/train/openarm_pi05_lora
+job_name: openarm_pi05_lora
+seed: 1000
+batch_size: 1
+num_workers: 2
+prefetch_factor: 2
+persistent_workers: true
+dataloader_multiprocessing_context: spawn
+steps: 30000
+log_freq: 20
+eval_steps: 1000
+max_eval_samples: 500
+env_eval_freq: 0
+save_checkpoint: true
+save_freq: 5000
+save_checkpoint_to_hub: false
+
+accelerator:
+  mixed_precision: bf16
+  gradient_accumulation:
+    steps: 4
+
+peft:
+  method_type: LORA
+  r: 4
+  lora_alpha: 8
+
+# EMA creates another parameter copy and is incompatible with this low-memory PEFT run.
+ema:
+  enable: false
+
+wandb:
+  enable: false

@@ -1,0 +1,258 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="qnbot_exoskeleton_left">
+  <xacro:macro name="qnbot_exoskeleton_left" params="prefix:=left_">
+    <link name="${prefix}base_link">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <mass value="0.026850190904186" />
+        <inertia ixx="4.6552236227332E-06" ixy="5.3984257797368E-09" ixz="-1.63422427558803E-08" iyy="4.67470571849282E-06" iyz="-2.95412971096151E-10" izz="7.62366587423592E-06" />
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://qnbot_teleoperator/resource/meshs/base_link.STL" />
+        </geometry>
+        <material name="">
+          <color rgba="0 1 1 0.8" />
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://qnbot_teleoperator/resource/meshs/base_link.STL" />
+        </geometry>
+      </collision>
+    </link>
+    <link name="${prefix}link1">
+      <inertial>
+        <origin xyz="-0.000261024409190133 -0.00591081088153841 0.0491204495977146" rpy="0 0 0" />
+        <mass value="0.0470742029722257" />
+        <inertia ixx="1.25010625940816E-05" ixy="-9.32655152697924E-09" ixz="6.23086642715079E-09" iyy="1.33012897675415E-05" iyz="1.83835747206343E-06" izz="7.33795684815387E-06" />
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://qnbot_teleoperator/resource/meshs/link1.STL" />
+        </geometry>
+        <material name="">
+          <color rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" />
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://qnbot_teleoperator/resource/meshs/link1.STL" />
+        </geometry>
+      </collision>
+    </link>
+    <joint name="${prefix}arm_joint_1" type="revolute">
+      <origin xyz="0.000072 -0.000051 0.024300" rpy="0.000000 -0.000000 3.1416" />
+      <parent link="${prefix}base_link" />
+      <child link="${prefix}link1" />
+      <axis xyz="0 0 1" />
+      <limit lower="-2.356" upper="2.356" effort="0" velocity="0" />
+    </joint>
+    <link name="${prefix}link2">
+      <inertial>
+        <origin xyz="3.99081870933449E-05 0.0152492681020813 0.0183165012563236" rpy="0 0 0" />
+        <mass value="0.087715517884446" />
+        <inertia ixx="2.00696139042997E-05" ixy="1.20395892797401E-08" ixz="4.41359818987996E-09" iyy="2.31689899764332E-05" iyz="2.49239941243645E-06" izz="2.03863361771034E-05" />
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://qnbot_teleoperator/resource/meshs/link2.STL" />
+        </geometry>
+        <material name="">
+          <color rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" />
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://qnbot_teleoperator/resource/meshs/link2.STL" />
+        </geometry>
+      </collision>
+    </link>
+    <joint name="${prefix}arm_joint_2" type="revolute">
+      <origin xyz="0 -0.011 0.0945" rpy="0 0 0" />
+      <parent link="${prefix}link1" />
+      <child link="${prefix}link2" />
+      <axis xyz="0 -1 0" />
+      <limit lower="-2.094" upper="2.094" effort="0" velocity="0" />
+    </joint>
+    <link name="${prefix}link3">
+      <inertial>
+        <origin xyz="0.00295641540106801 -2.93305384381883E-05 0.14279400176535" rpy="0 0 0" />
+        <mass value="0.0935710843769104" />
+        <inertia ixx="0.00015711605213617" ixy="-2.86153902553734E-11" ixz="-1.846354591963E-06" iyy="0.000156512310223284" iyz="8.57728432718479E-09" izz="1.24981165776448E-05" />
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://qnbot_teleoperator/resource/meshs/link3.STL" />
+        </geometry>
+        <material name="">
+          <color rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" />
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://qnbot_teleoperator/resource/meshs/link3.STL" />
+        </geometry>
+      </collision>
+    </link>
+    <joint name="${prefix}arm_joint_3" type="revolute">
+      <origin xyz="0 0.011 0.0573" rpy="0 0 0" />
+      <parent link="${prefix}link2" />
+      <child link="${prefix}link3" />
+      <axis xyz="0 0 -1" />
+      <limit lower="-2.617" upper="2.617" effort="0" velocity="0" />
+    </joint>
+    <link name="${prefix}link4">
+      <inertial>
+        <origin xyz="-0.01658882753981 0.0227981554092991 0.0200767602294536" rpy="0 0 0" />
+        <mass value="0.10264169696269" />
+        <inertia ixx="4.08579361371124E-05" ixy="-4.10671128848104E-06" ixz="-3.23250718765036E-06" iyy="3.35440431889445E-05" iyz="-9.1397998839838E-06" izz="2.67015878529876E-05" />
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://qnbot_teleoperator/resource/meshs/link4.STL" />
+        </geometry>
+        <material name="">
+          <color rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" />
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://qnbot_teleoperator/resource/meshs/link4.STL" />
+        </geometry>
+      </collision>
+    </link>
+    <joint name="${prefix}arm_joint_4" type="revolute">
+      <origin xyz="0.011 0 0.282" rpy="0 0 0" />
+      <parent link="${prefix}link3" />
+      <child link="${prefix}link4" />
+      <axis xyz="-1 0 0" />
+      <limit lower="-1.5707" upper="1.5707" effort="0" velocity="0" />
+    </joint>
+    <link name="${prefix}link5">
+      <inertial>
+        <origin xyz="-0.00439927161202445 0.112314081346485 1.15397217503865E-07" rpy="0 0 0" />
+        <mass value="0.0628820437880917" />
+        <inertia ixx="3.8118274656376E-05" ixy="1.83036142380442E-06" ixz="1.60934931379299E-11" iyy="8.41758524941673E-06" iyz="1.77462537064487E-10" izz="3.75575131155873E-05" />
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://qnbot_teleoperator/resource/meshs/link5.STL" />
+        </geometry>
+        <material name="">
+          <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://qnbot_teleoperator/resource/meshs/link5.STL" />
+        </geometry>
+      </collision>
+    </link>
+    <joint name="${prefix}arm_joint_5" type="revolute">
+      <origin xyz="-0.011 0.0669 0.035" rpy="0 0 0" />
+      <parent link="${prefix}link4" />
+      <child link="${prefix}link5" />
+      <axis xyz="0 1 0" />
+      <limit lower="-2.617" upper="2.617" effort="0" velocity="0" />
+    </joint>
+    <link name="${prefix}link6">
+      <inertial>
+        <origin xyz="0.015465716290434 3.96767965084588E-05 -0.0164621209236788" rpy="0 0 0" />
+        <mass value="0.0834441230589525" />
+        <inertia ixx="2.17721355789508E-05" ixy="1.09444725269634E-08" ixz="-2.49646634234558E-06" iyy="1.86815799496671E-05" iyz="-5.69479004111484E-09" izz="1.90640956316718E-05" />
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://qnbot_teleoperator/resource/meshs/link6.STL" />
+        </geometry>
+        <material name="">
+          <color rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" />
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://qnbot_teleoperator/resource/meshs/link6.STL" />
+        </geometry>
+      </collision>
+    </link>
+    <joint name="${prefix}arm_joint_6" type="revolute">
+      <origin xyz="-0.011 0.1944 0" rpy="0 0 0" />
+      <parent link="${prefix}link5" />
+      <child link="${prefix}link6" />
+      <axis xyz="1 0 0" />
+      <limit lower="-1.5707" upper="1.5707" effort="0" velocity="0" />
+    </joint>
+    <link name="${prefix}link7">
+      <inertial>
+        <origin xyz="-0.00101254083050512 -0.000277712173143818 0.000300510680079025" rpy="0 0 0" />
+        <mass value="0.00793837186237928" />
+        <inertia ixx="7.55412015881073E-07" ixy="-8.68043813018782E-10" ixz="-9.68915466398157E-09" iyy="7.5514745425218E-07" iyz="-2.64663460528016E-09" izz="1.3981818896587E-06" />
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://qnbot_teleoperator/resource/meshs/link7.STL" />
+        </geometry>
+        <material name="">
+          <color rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" />
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://qnbot_teleoperator/resource/meshs/link7.STL" />
+        </geometry>
+      </collision>
+    </link>
+    <joint name="${prefix}arm_joint_7" type="revolute">
+      <origin xyz="0.011 0 -0.0523" rpy="0 0 0" />
+      <parent link="${prefix}link6" />
+      <child link="${prefix}link7" />
+      <axis xyz="0 0 1" />
+      <limit lower="-2.904" upper="2.094" effort="0" velocity="0" />
+    </joint>
+    <link name="${prefix}link8">
+      <inertial>
+        <origin xyz="0.0434921324481503 -0.0219789981661219 -0.0267501496705435" rpy="0 0 0" />
+        <mass value="0.136247562595567" />
+        <inertia ixx="0.000237342848429696" ixy="-3.31091282943591E-05" ixz="1.74222684567525E-06" iyy="0.000207515538008856" iyz="3.14700745884723E-05" izz="0.000128678364303582" />
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://qnbot_teleoperator/resource/meshs/link8.STL" />
+        </geometry>
+        <material name="">
+          <color rgba="1 1 1 1" />
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://qnbot_teleoperator/resource/meshs/link8.STL" />
+        </geometry>
+      </collision>
+    </link>
+    <joint name="${prefix}handler" type="fixed">
+      <origin xyz="0 0.07 0.0523" rpy="0 0 0" />
+      <parent link="${prefix}link7" />
+      <child link="${prefix}link8" />
+      <axis xyz="0 0 0" />
+    </joint>
+  </xacro:macro>
+</robot>

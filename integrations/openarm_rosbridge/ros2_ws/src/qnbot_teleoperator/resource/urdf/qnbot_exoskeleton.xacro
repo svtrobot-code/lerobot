@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="qnbot_exoskeleton">
+
+  <!-- 包含单臂xacro文件 -->
+  <xacro:include filename="$(find qnbot_teleoperator)/resource/urdf/qnbot_exoskeleton_right.xacro"/>
+  <xacro:include filename="$(find qnbot_teleoperator)/resource/urdf/qnbot_exoskeleton_left.xacro"/>
+
+  <!-- 外骨骼基座 -->
+  <link name="exoskeleton_base">
+    <visual>
+      <geometry>
+        <box size="0.03 0.4 0.2"/>
+      </geometry>
+      <material name="base_material">
+        <color rgba="0.3 0.3 0.3 0.5"/>
+      </material>
+    </visual>
+    <inertial>
+      <mass value="2.0"/>
+      <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01"/>
+    </inertial>
+  </link>
+
+  <!-- 左臂安装点（距离中心20cm，Y轴正方向） -->
+  <joint name="left_arm_mount" type="fixed">
+    <parent link="exoskeleton_base"/>
+    <child link="left_base_link"/>
+    <origin xyz="0 0.2 0" rpy="1.5708 3.1416 3.1416"/>
+  </joint>.
+
+    <!-- 右臂安装点（距离中心20cm，Y轴负方向） -->
+  <joint name="right_arm_mount" type="fixed">
+    <parent link="exoskeleton_base"/>
+    <child link="right_base_link"/>
+    <origin xyz="0 -0.2 0" rpy="1.5708 0 0"/>
+  </joint>
+
+  <!-- 实例化左臂 -->
+  <xacro:qnbot_exoskeleton_left prefix="left_"/>
+
+  <!-- 实例化右臂 -->
+  <xacro:qnbot_exoskeleton_right prefix="right_"/>
+
+</robot>
